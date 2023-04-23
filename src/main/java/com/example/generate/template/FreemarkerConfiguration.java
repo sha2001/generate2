@@ -10,7 +10,7 @@ import java.io.IOException;
 public class FreemarkerConfiguration {
 
   @Bean
-  public freemarker.template.Configuration getFreemarkerConfiguration() throws IOException {
+  public freemarker.template.Configuration getFreemarkerConfiguration() {
     freemarker.template.Configuration cfg =
         new freemarker.template.Configuration(freemarker.template.Configuration.VERSION_2_3_32);
     cfg.setClassLoaderForTemplateLoading(Thread.currentThread().getContextClassLoader(), "/templates");

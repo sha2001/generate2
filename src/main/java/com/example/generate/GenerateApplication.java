@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @SpringBootApplication
 @Slf4j
@@ -46,9 +45,7 @@ public class GenerateApplication implements CommandLineRunner {
         Collection<Map> operations = paths.values();
 
         List<Map> test   = new ArrayList<>();
-        operations.forEach(o ->{
-           test.addAll(o.values());
-        });
+        operations.forEach(o -> test.addAll(o.values()));
 
 
         configuration.getController().setOperations(new ArrayList<>());
