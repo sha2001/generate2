@@ -1,9 +1,12 @@
 package com.example.generate.configuration;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Property {
-    private String name;
-    private String type;
+     String name;
+     String type;
 }

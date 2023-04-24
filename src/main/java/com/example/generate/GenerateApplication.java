@@ -3,8 +3,10 @@ package com.example.generate;
 import com.example.generate.configuration.Configuration;
 import com.example.generate.configuration.Operation;
 import com.example.generate.generator.SourceGenerator;
+import com.example.generate.openapi.SwaggerMapper;
 import com.example.generate.yaml.JacksonLoader;
 import com.example.generate.yaml.SnakeLoader;
+import com.example.generate.yaml.YamlLoader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -25,45 +27,28 @@ public class GenerateApplication implements CommandLineRunner {
     }
 
     private final SourceGenerator sourceGenerator;
-    private final JacksonLoader jacksonLoader;
+    private final SwaggerMapper swaggerMapper;
+   // private final JacksonLoader jacksonLoader;
 
     @Override
     public void run(String... args) throws FileNotFoundException {
 
         String configurationFile= "./"+ args[0];
         String swaggerOperationsFiles = "./" + args[1];
+        String swaggerOjectsFiles = "./"+args[2];
 
-        SnakeLoader<Configuration> snakeLoader = new SnakeLoader<>(Configuration::new);
-        SnakeLoader<Object> swaggerOperationLoader = new SnakeLoader<>(LinkedHashMap::new);
+        YamlLoader<Configuration> snakeLoader = new SnakeLoader<>(Configuration::new);
+        YamlLoader<Object> swaggerOperationLoader = new SnakeLoader<>(LinkedHashMap::new);
+        Map<String, Map> swaggerOperations = (Map<String, Map>) swaggerOperationLoader.load(swaggerOperationsFiles);
+        Map<String, Map> swaggerObjects = (Map<String, Map>) swaggerOperationLoader.load(swaggerOjectsFiles);
+
 
         Configuration configuration = snakeLoader.load(configurationFile);
 
+
+        configuration.getController().setOperations(swaggerMapper.mapOperations(swaggerOperations, configuration));
+
         log.info("{}",configuration);
-
-        Map<String, Map> swagger = (Map<String, Map>) swaggerOperationLoader.load(swaggerOperationsFiles);
-        Map<String, Map> paths = (Map<String, Map>) swagger.get("paths");
-        Collection<Map> operations = paths.values();
-
-        List<Map> test   = new ArrayList<>();
-        operations.forEach(o -> test.addAll(o.values()));
-
-
-        configuration.getController().setOperations(new ArrayList<>());
-        test.forEach(i->{
-            List<String> s = (List<String>) i.get("tags");
-
-
-            if (s.contains(configuration.getController().getSwaggerTag())) {
-
-
-                Operation operation = new Operation();
-                String operationId = (String) i.get("operationId");
-                operation.setOperationId(operationId);
-                log.info("{}",i.get("parameters"));
-                log.info("{}", operationId);
-                configuration.getController().getOperations().add(operation);
-            }
-        });
 
         sourceGenerator.generate(configuration);
 
