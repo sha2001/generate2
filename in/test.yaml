@@ -1,0 +1,35 @@
+
+name: Person
+packageName: be.person
+repository:
+  name: Person
+entity:
+  name: Person
+  table:
+    name: prs_person
+    tableFields:
+      - name: id
+        type: Integer
+        id: true
+      - name: firstname
+        type: String
+        column: first_name
+      - name: lastname
+        type: String
+        column: last_name
+      - name: birthdate
+        type: LocalDate
+service:
+  name: Person
+  methods:
+    - id: createPerson
+      rules:
+        - name: test1
+          rule: test >= 0
+        - name: test2
+          rule: test < 0
+    - id: createTest
+controller:
+  name: Person
+  swaggerTag: person
+  packageJson: be.json

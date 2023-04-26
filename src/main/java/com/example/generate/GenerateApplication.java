@@ -4,6 +4,7 @@ import com.example.generate.configuration.Configuration;
 import com.example.generate.configuration.Operation;
 import com.example.generate.generator.SourceGenerator;
 import com.example.generate.openapi.SwaggerMapper;
+import com.example.generate.openapi.model.Swagger;
 import com.example.generate.yaml.JacksonLoader;
 import com.example.generate.yaml.SnakeLoader;
 import com.example.generate.yaml.YamlLoader;
@@ -28,27 +29,27 @@ public class GenerateApplication implements CommandLineRunner {
 
     private final SourceGenerator sourceGenerator;
     private final SwaggerMapper swaggerMapper;
-   // private final JacksonLoader jacksonLoader;
+    private final GenerateConfiguration generateConfiguration;
+    // private final JacksonLoader jacksonLoader;
 
     @Override
     public void run(String... args) throws FileNotFoundException {
 
-        String configurationFile= "./"+ args[0];
-        String swaggerOperationsFiles = "./" + args[1];
-        String swaggerOjectsFiles = "./"+args[2];
+        String configurationFile = generateConfiguration.getInDirectory() + args[0];
+        String swaggerOperationsFiles = generateConfiguration.getInDirectory() + args[1];
+        String swaggerObjectsFiles = generateConfiguration.getInDirectory() + args[2];
 
         YamlLoader<Configuration> snakeLoader = new SnakeLoader<>(Configuration::new);
-        YamlLoader<Object> swaggerOperationLoader = new SnakeLoader<>(LinkedHashMap::new);
-        Map<String, Map> swaggerOperations = (Map<String, Map>) swaggerOperationLoader.load(swaggerOperationsFiles);
-        Map<String, Map> swaggerObjects = (Map<String, Map>) swaggerOperationLoader.load(swaggerOjectsFiles);
-
+        YamlLoader<Swagger> swaggerLoader = new SnakeLoader<>(Swagger::new);
+        Swagger swaggerOperations =  swaggerLoader.load(swaggerOperationsFiles);
+        Swagger swaggerObjects = swaggerLoader.load(swaggerObjectsFiles);
 
         Configuration configuration = snakeLoader.load(configurationFile);
+       // swaggerMapper.mapObjects(swaggerObjects, configuration);
 
+       // configuration.getController().setOperations(swaggerMapper.mapOperations(swaggerOperations, configuration));
 
-        configuration.getController().setOperations(swaggerMapper.mapOperations(swaggerOperations, configuration));
-
-        log.info("{}",configuration);
+        log.info("{}", configuration);
 
         sourceGenerator.generate(configuration);
 

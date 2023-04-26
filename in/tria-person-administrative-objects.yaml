@@ -1,0 +1,604 @@
+swagger: "2.0"
+info:
+  title: common technical data types
+  version: 1.0.0
+paths: { }
+definitions:
+  Address:
+    type: object
+    properties:
+      belgianAddresses:
+        items:
+          $ref: '#/definitions/BelgianAddress'
+        type: array
+        description: list of belgian Address
+      foreignAddresses:
+        items:
+          $ref: '#/definitions/ForeignAddress'
+        type: array
+        description: list og foreign Address
+
+  BelgianAddress:
+    type: object
+    properties:
+      id:
+        description: The address ID
+        type: integer
+      type:
+        description: The address type
+        $ref: '#/definitions/TypeAddress'
+      source:
+        description: The address source
+        $ref: '#/definitions/SourceAddress'
+      street:
+        description: The address street name
+        type: string
+      houseNumber:
+        description: The address house number
+        type: string
+      building:
+        description: The address building
+        type: string
+      box:
+        description: The address box
+        type: string
+      city:
+        description: The address city
+        type: string
+      postalCode:
+        description: The address postal code
+        type: string
+      startDate:
+        description: The address start date
+        format: 'date'
+        type: string
+      endDate:
+        description: The address end date
+        format: 'date'
+        type: string
+
+  ForeignAddress:
+    type: object
+    properties:
+      id:
+        description: The address ID
+        type: integer
+      type:
+        description: The address type
+        $ref: '#/definitions/TypeAddress'
+      source:
+        description: The address source
+        $ref: '#/definitions/SourceAddress'
+      street:
+        description: The address street name
+        type: string
+      houseNumber:
+        description: The address house number
+        type: string
+      building:
+        description: The address building
+        type: string
+      box:
+        description: The address box
+        type: string
+      city:
+        description: The address city
+        type: string
+      postalCode:
+        description: The address postal code
+        type: string
+      country:
+        type: integer
+        format: int32
+        description: NIS code identifying a country and defined by statbel.fgov.be (Country nomenclature GEOBEL).
+        minimum: 100
+        maximum: 999
+      addressText:
+        description: Free text for exotic address format
+        type: string
+      startDate:
+        description: The address start date
+        format: 'date'
+        type: string
+      endDate:
+        description: The address end date
+        format: 'date'
+        type: string
+
+  BankAccountHolderValidation:
+    type: object
+    properties:
+      id:
+        description: The BankAccountHolderValidation technical ID
+        type: integer
+      bankAccountId:
+        description: The BankAccount technical ID
+        type: integer
+      iban:
+        description: The BankAccount IBAN
+        type: string
+      status:
+        $ref: '#/definitions/BankAccountHolderValidationStatus'
+      createdOn:
+        description: Date when the bank BankAccountHolderValidation was created
+        format: date-time
+        type: string
+      holder:
+        description: The holder of the bank account
+        type: object
+        properties:
+          id:
+            description: The Person technical ID of the holder
+            type: integer
+          lastName:
+            description: The holder's last name
+            type: string
+          firstName:
+            description: The holder's first name
+            type: string
+          birthDate:
+            description: The birth date of the holder
+            format: date
+            type: string
+          address:
+            $ref: '#/definitions/Address'
+  
+  BankAccountHolderValidationStatus:
+    type: string
+    enum:
+      - TODO
+      - SENT
+      - DONE
+      - FAILED
+      - NONE
+
+  BankAccount:
+    type: object
+    properties:
+      id:
+        description: The BankAccount technical ID
+        type: integer
+      iban:
+        description: The BankAccount IBAN
+        type: string
+      bic:
+        description: Bank account BIC
+        type: string
+      bankName:
+        description: The name of the bank
+        type: string
+      validFrom:
+        description: Date of the bank account from which it is valid
+        format: date
+        type: string
+      validUntil:
+        description: Bank account date valid until this
+        format: date
+        type: string
+      status:
+        $ref: '#/definitions/BankAccountStatus'
+      refusalMotivation:
+        $ref: '#/definitions/BankAccountRefusalMotivation'
+      openBy:
+        description: The name of the person who opened the bank account
+        $ref: '#/definitions/BankAccountOpener'
+      createdOn:
+        description: Date when the bank account was created in the system
+        format: date-time
+        type: string
+      createdBy:
+        description: the user who created the bank account (or system)
+        type: string
+      closedOn:
+        description: Date when the bank account was closed
+        format: date
+        type: string
+      closedBy:
+        description:  the user who closed the bank account (or system)
+        type: string
+
+  BankAccountRefusalMotivation:
+    type: string
+    enum:
+      - UNKNOWN_BANK_ACCOUNT
+      - BANK_ACCOUNT_CLOSED
+      - NOT_CURRENT_BANK_ACCOUNT
+      - DIFFERENT_DATE_OF_BIRTH
+      - DIFFERENT_FAMILY_NAME
+      - DIFFERENT_FIRST_NAME
+      - NOT_HOLDER_OF_BANK_ACCOUNT
+      - OTHER
+
+
+  BankAccountStatus:
+    type: string
+    enum:
+      - NON_COMPLIANT_REQUEST
+      - REFUSED
+      - OPEN
+      - CLOSED_ACCOUNT_HOLDER
+      - CLOSED_BANK
+      - CLOSED_HOLDER_BANK
+      - CLOSED_ACCOUNTING
+      - CLOSED_TRIA_AUTOMATIC
+      - PENDING_VALIDATION
+
+  CivilState:
+    type: string
+    enum:
+      - UNKNOWN
+      - SINGLE
+      - MARRIED
+      - WIDOWED
+      - DIVORCED
+      - SEPARATED_FROM_BED_AND_BOARD
+      - DE_FACTO_SEPARATED
+
+  ContactChannel:
+    type: string
+    enum:
+      - LETTER
+      - MAIL
+      - LANDLINE_PHONE
+      - MOBILE_PHONE
+
+  ContactInfo:
+    type: object
+    properties:
+      preferredContactChannel:
+        $ref: '#/definitions/ContactChannel'
+      preferredCorrespondence:
+        $ref: '#/definitions/TypeAddress'
+      phone:
+        description: The single line phone number of the person
+        type: string
+      mobile:
+        description: The mobile phone number of the person
+        type: string
+      email:
+        description: The email of the person
+        type: string
+      ehealthBox:
+        description: The ehealthBox if the person is a doctor
+        type: string
+      sms_allowed:
+        description: Whether the person accepts or not to receive information via sms.
+        type: boolean
+      ebox_allowed:
+        description: Whether the person accepts or not to receive information via ebox.
+        type: boolean
+
+  Gender:
+    description: Gender of a person
+    type: string
+    enum:
+      - M
+      - F
+      - X
+
+  Inscription:
+    type: object
+    properties:
+      id:
+        description: The ID of Inscription
+        type: integer
+      code:
+        description: The code of inscription
+        type: string
+      inscriptionContext:
+        description: The context of inscription
+        type: string
+      startDate:
+        description: The start date of inscription
+        format: date
+        type: string
+      endDate:
+        description: The end date of inscription
+        format: date
+        type: string
+      status:
+        description: The status of inscription
+        type: string
+        enum:
+          - ADDED
+          - DELETED
+
+  Person:
+    type: object
+    properties:
+      id:
+        description: The internal ID at FPS Social Security
+        type: integer
+      nihdiNumber:
+        description: NIHDI number if the person is a doctor
+        type: string
+      lastName:
+        description: The person's last name
+        type: string
+      firstName:
+        description: The person's first name
+        type: string
+      gender:
+        description: Gender of the person
+        $ref: '#/definitions/Gender'
+      birthDate:
+        description: The birth date of the person
+        format: date
+        type: string
+      deathDate:
+        description: The death date of the person
+        format: date
+        type: string
+      ssin:
+        # commented out because of an issue with swagger:
+        # https://github.com/belgif/rest-guide/issues/25
+        # $ref: 'person/identifier/v1/person-identifier-v1.yaml#/definitions/Ssin'
+        type: string
+      title:
+        $ref: '#/definitions/Title'
+      civilState:
+        description: The civil state of the person
+        $ref: '#/definitions/CivilState'
+      language:
+        $ref: '#/definitions/LanguageEnum'
+      contactInfo:
+        $ref: '#/definitions/ContactInfo'
+      address:
+        $ref: '#/definitions/Address'
+      bankAccounts:
+        items:
+          $ref: '#/definitions/BankAccount'
+        type: array
+      relations:
+        type: array
+        items:
+          $ref: '#/definitions/Relation'
+      inscriptions:
+        type: array
+        items:
+          $ref: '#/definitions/Inscription'
+      nationality:
+        $ref: 'location/v1/location-v1.yaml#/definitions/CountryNisCode'
+      disabled:
+        type: boolean
+  PersonSummary:
+    type: object
+    properties:
+      id:
+        description: The internal ID at FPS Social Security
+        type: integer
+      httpLink:
+        $ref: '#/definitions/HttpLink'
+      firstName:
+        description: The first name of the person
+        type: string
+      lastName:
+        description: The name of the person
+        type: string
+      birthDate:
+        description: The birth date of the person
+        format: date
+        type: string
+      ssin:
+        # commented out because of an issue with swagger:
+        # https://github.com/belgif/rest-guide/issues/25
+        # $ref: 'person/identifier/v1/person-identifier-v1.yaml#/definitions/Ssin'
+        type: string
+        pattern: "^\\d{11}$"
+      title:
+        description: The title of the person
+        $ref: '#/definitions/Title'
+  PersonSummaryPage:
+    type: object
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/PersonSummary'
+        type: array
+      tooManyElements:
+        type: boolean
+        default: false
+      currentPage:
+        type: integer
+      pageSize:
+        type: integer
+      totalPages:
+        type: integer
+      totalElements:
+        type: integer
+
+  Relation:
+    type: object
+    properties:
+      id:
+        type: integer
+      type:
+        $ref: '#/definitions/RelationType'
+      startDate:
+        format: date
+        type: string
+      endDate:
+        format: date
+        type: string
+      person:
+        $ref: '#/definitions/Person'
+
+  SearchPersonsResponsePageable:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/Person'
+        type: array
+      page:
+        type: integer
+      size:
+        type: integer
+      total:
+        type: integer
+      totalElements:
+        type: integer
+    type: object
+
+  LanguageEnum:
+    description: The language of the person
+    type: string
+    enum: [ "FR","NL","EN","DE" ]
+  
+  HttpLink:
+    description: 'A base type of objects representing links to resources.'
+    type: object
+    readOnly: true
+    properties:
+      href:
+        description: 'Any absolute URI that is using http or https protocol'
+        type: string
+        format: uri
+      title:
+        description: Its value is a string and is intended for labelling the link with a human-readable identifier (as defined by [RFC5988]).
+        type: string
+        readOnly: true
+    required:
+      - href
+
+  RelationType:
+    description: Type of relation between a person and a person with a disability
+    type: string
+    enum:
+      - PARTNER
+      - CONTACT_PERSON
+      - LEGAL_REPRESENTATIVE
+      - PHYSICIAN
+      - CO_PARENT
+
+  SearchCriteria:
+    description: Criteria to search a person by SSIN, lastName or firstName
+    type: object
+    properties:
+      ssin:
+        type: string
+        pattern: "^\\d{11}$"
+      nihdiNumber:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+
+
+  Title:
+    description: The title of the person
+    type: string
+    enum:
+      - MR
+      - MRS
+
+  BankAccountOpener:
+    description: The opener of a bank account
+    type: string
+    enum:
+      - ADMINISTRATOR
+      - PWD
+
+  TypeAddress:
+    type: string
+    enum:
+      - DIPLOMATIC
+      - DOMICILE
+      - RESIDENCE
+
+  SourceAddress:
+    type: string
+    enum:
+      - BCSS
+      - USER
+      - INTAKE
+parameters:
+  AddressId:
+    name: addressId
+    in: path
+    description: The address technical ID
+    required: true
+    type: integer
+
+  BankAccountHolderValidationId:
+    name: bankAccountHolderValidationId
+    in: path
+    description: The BankAccountHolderValidation technical ID
+    required: true
+    type: integer
+  
+  Gender:
+    name: Gender
+    in: query
+    description: Gender of a person
+    type: string
+    enum:
+      - M
+      - F
+      - X
+
+  BankAccountId:
+    name: bankAccountId
+    in: path
+    description: The BankAccount technical ID
+    required: true
+    type: integer
+
+  BankAccountHolderValidationStatus:
+    name: status
+    in: query
+    description: Status of a BankAccountHolderValidation
+    type: string
+    enum:
+      - TODO
+      - SENT
+      - DONE
+      - FAILED
+      - NONE
+
+  InscriptionId:
+    name: inscriptionId
+    in: path
+    description: The inscription technical ID
+    required: true
+    type: integer
+
+  PersonId:
+    name: personId
+    in: path
+    description: The internal ID at FPS Social Security
+    required: true
+    type: integer
+
+  Active:
+    name: activeDependenciesOnly
+    in: query
+    description: if true return active ressources ( bankAccount/relation/address/inscription)
+    required: false
+    type: boolean
+    default: true
+
+  PersonType:
+    name: personType
+    in: query
+    description: type of the Person
+    required: true
+    type: string
+    enum:
+      - VALID
+      - DISABLED
+      - ALL
+    default: ALL
+
+  RelationId:
+    name: relationId
+    in: path
+    description: The Relation technical ID
+    required: true
+    type: integer
+
+  Ssin:
+    name: ssin
+    in: path
+    required: true
+    type: string

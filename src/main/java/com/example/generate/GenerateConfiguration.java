@@ -10,4 +10,7 @@ public class GenerateConfiguration {
 
   @Value("${out.directory}")
   private String outDirectory;
+
+  @Value("${in.directory}")
+  private String inDirectory;
 }
