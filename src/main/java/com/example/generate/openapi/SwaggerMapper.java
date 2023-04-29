@@ -3,14 +3,15 @@ package com.example.generate.openapi;
 import com.example.generate.configuration.Configuration;
 import com.example.generate.configuration.ObjectDefinition;
 import com.example.generate.configuration.Operation;
+import com.example.generate.configuration.Parameter;
+import com.example.generate.openapi.model.Definition;
+import com.example.generate.openapi.model.Path;
+import com.example.generate.openapi.model.Swagger;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -22,35 +23,60 @@ public class SwaggerMapper {
     private final SwaggerObjectMapper swaggerObjectMapper;
 
 
-    public List<Operation> mapOperations(final Map swagger, final Configuration configuration) {
+    public List<Operation> mapOperations(final Swagger swagger, final Configuration configuration) {
 
-        var paths = (Map<String, Map>) swagger.get("paths");
-        var swaggerOperations = paths.values();
+        var paths = (Map<String, Path>) swagger.getPaths();
+        Collection<Path> swaggerOperations = paths.values();
 
-        List<Map> test = new ArrayList<>();
-        swaggerOperations.forEach(o -> test.addAll(o.values()));
+        List<Operation> controllerOperations = new ArrayList<>();
+        swaggerOperations.forEach(path ->
+            path.getOperations().forEach(op->map(op, configuration).ifPresent(controllerOperations::add)));
 
-        ArrayList<Operation> controllerOperations = new ArrayList<>();
 
-        test.forEach(i -> {
-            List<String> s = (List<String>) i.get("tags");
-            if (s.contains(configuration.getController().getSwaggerTag())) {
-                controllerOperations.add(swaggerObjectMapper.mapOperation(i));
-            }
-        });
         return controllerOperations;
     }
 
-    public void mapObjects(Map<String, Map<String, Map>> swaggerObjects, Configuration configuration) {
+    private Optional<Operation> map(com.example.generate.openapi.model.Operation put, Configuration configuration) {
 
+        if (put == null) {
+            return Optional.empty();
+        }
+        if (put.getTags().contains(configuration.getController().getSwaggerTag())) {
+            Operation operation = new Operation();
 
-       configuration.setObjects(  swaggerObjects.get("definitions").entrySet().stream()
+            operation.setOperationId(put.getOperationId());
+            operation.setParameters(put.getParameters().stream().map(this::mapParameter).collect(Collectors.toList()));
+            return Optional.of(operation);
+
+        } else {
+            return Optional.empty();
+        }
+
+    }
+
+    private Parameter mapParameter(com.example.generate.openapi.model.Parameter parameter) {
+        Parameter param = new Parameter();
+
+        param.setType(parameter.getType());
+        param.setName(parameter.getName());
+        param.setRequired(param.isRequired());
+        return param;
+    }
+
+    public void mapObjects(Swagger swaggerObjects, Configuration configuration) {
+
+/*
+        configuration.setObjects(swaggerObjects.getDefinitions().entrySet().stream()
                 .map(entry -> mapObject(entry.getKey(), entry.getValue()))
-                 .collect(Collectors.toMap(ObjectDefinition::getName, Function.identity()))
-       );
+                .collect(Collectors.toMap(ObjectDefinition::getName, Function.identity()))
+        );
+        */
 
 
+    }
 
+    private ObjectDefinition mapObject(String key, Definition value) {
+        return null;
     }
 
     private ObjectDefinition mapObject(String name, Map<String, Object> d) {
@@ -77,7 +103,7 @@ public class SwaggerMapper {
                 }
                 case "string" -> definition.setType("String");
                 case "boolean" -> definition.setType("boolean");
-                case "integer"-> definition.setType("int");
+                case "integer" -> definition.setType("int");
                 default -> log.info("default : {}", type);
             }
         }

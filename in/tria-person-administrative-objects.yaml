@@ -9,12 +9,12 @@ definitions:
     properties:
       belgianAddresses:
         items:
-          $ref: '#/definitions/BelgianAddress'
+          ref: '#/definitions/BelgianAddress'
         type: array
         description: list of belgian Address
       foreignAddresses:
         items:
-          $ref: '#/definitions/ForeignAddress'
+          ref: '#/definitions/ForeignAddress'
         type: array
         description: list og foreign Address
 
@@ -26,10 +26,10 @@ definitions:
         type: integer
       type:
         description: The address type
-        $ref: '#/definitions/TypeAddress'
+        ref: '#/definitions/TypeAddress'
       source:
         description: The address source
-        $ref: '#/definitions/SourceAddress'
+        ref: '#/definitions/SourceAddress'
       street:
         description: The address street name
         type: string
@@ -65,10 +65,10 @@ definitions:
         type: integer
       type:
         description: The address type
-        $ref: '#/definitions/TypeAddress'
+        ref: '#/definitions/TypeAddress'
       source:
         description: The address source
-        $ref: '#/definitions/SourceAddress'
+        ref: '#/definitions/SourceAddress'
       street:
         description: The address street name
         type: string
@@ -118,7 +118,7 @@ definitions:
         description: The BankAccount IBAN
         type: string
       status:
-        $ref: '#/definitions/BankAccountHolderValidationStatus'
+        ref: '#/definitions/BankAccountHolderValidationStatus'
       createdOn:
         description: Date when the bank BankAccountHolderValidation was created
         format: date-time
@@ -141,7 +141,7 @@ definitions:
             format: date
             type: string
           address:
-            $ref: '#/definitions/Address'
+            ref: '#/definitions/Address'
   
   BankAccountHolderValidationStatus:
     type: string
@@ -176,12 +176,12 @@ definitions:
         format: date
         type: string
       status:
-        $ref: '#/definitions/BankAccountStatus'
+        ref: '#/definitions/BankAccountStatus'
       refusalMotivation:
-        $ref: '#/definitions/BankAccountRefusalMotivation'
+        ref: '#/definitions/BankAccountRefusalMotivation'
       openBy:
         description: The name of the person who opened the bank account
-        $ref: '#/definitions/BankAccountOpener'
+        ref: '#/definitions/BankAccountOpener'
       createdOn:
         description: Date when the bank account was created in the system
         format: date-time
@@ -246,9 +246,9 @@ definitions:
     type: object
     properties:
       preferredContactChannel:
-        $ref: '#/definitions/ContactChannel'
+        ref: '#/definitions/ContactChannel'
       preferredCorrespondence:
-        $ref: '#/definitions/TypeAddress'
+        ref: '#/definitions/TypeAddress'
       phone:
         description: The single line phone number of the person
         type: string
@@ -320,7 +320,7 @@ definitions:
         type: string
       gender:
         description: Gender of the person
-        $ref: '#/definitions/Gender'
+        ref: '#/definitions/Gender'
       birthDate:
         description: The birth date of the person
         format: date
@@ -332,33 +332,33 @@ definitions:
       ssin:
         # commented out because of an issue with swagger:
         # https://github.com/belgif/rest-guide/issues/25
-        # $ref: 'person/identifier/v1/person-identifier-v1.yaml#/definitions/Ssin'
+        # ref: 'person/identifier/v1/person-identifier-v1.yaml#/definitions/Ssin'
         type: string
       title:
-        $ref: '#/definitions/Title'
+        ref: '#/definitions/Title'
       civilState:
         description: The civil state of the person
-        $ref: '#/definitions/CivilState'
+        ref: '#/definitions/CivilState'
       language:
-        $ref: '#/definitions/LanguageEnum'
+        ref: '#/definitions/LanguageEnum'
       contactInfo:
-        $ref: '#/definitions/ContactInfo'
+        ref: '#/definitions/ContactInfo'
       address:
-        $ref: '#/definitions/Address'
+        ref: '#/definitions/Address'
       bankAccounts:
         items:
-          $ref: '#/definitions/BankAccount'
+          ref: '#/definitions/BankAccount'
         type: array
       relations:
         type: array
         items:
-          $ref: '#/definitions/Relation'
+          ref: '#/definitions/Relation'
       inscriptions:
         type: array
         items:
-          $ref: '#/definitions/Inscription'
+          ref: '#/definitions/Inscription'
       nationality:
-        $ref: 'location/v1/location-v1.yaml#/definitions/CountryNisCode'
+        ref: 'location/v1/location-v1.yaml#/definitions/CountryNisCode'
       disabled:
         type: boolean
   PersonSummary:
@@ -368,7 +368,7 @@ definitions:
         description: The internal ID at FPS Social Security
         type: integer
       httpLink:
-        $ref: '#/definitions/HttpLink'
+        ref: '#/definitions/HttpLink'
       firstName:
         description: The first name of the person
         type: string
@@ -382,18 +382,18 @@ definitions:
       ssin:
         # commented out because of an issue with swagger:
         # https://github.com/belgif/rest-guide/issues/25
-        # $ref: 'person/identifier/v1/person-identifier-v1.yaml#/definitions/Ssin'
+        # ref: 'person/identifier/v1/person-identifier-v1.yaml#/definitions/Ssin'
         type: string
         pattern: "^\\d{11}$"
       title:
         description: The title of the person
-        $ref: '#/definitions/Title'
+        ref: '#/definitions/Title'
   PersonSummaryPage:
     type: object
     properties:
       results:
         items:
-          $ref: '#/definitions/PersonSummary'
+          ref: '#/definitions/PersonSummary'
         type: array
       tooManyElements:
         type: boolean
@@ -413,7 +413,7 @@ definitions:
       id:
         type: integer
       type:
-        $ref: '#/definitions/RelationType'
+        ref: '#/definitions/RelationType'
       startDate:
         format: date
         type: string
@@ -421,13 +421,13 @@ definitions:
         format: date
         type: string
       person:
-        $ref: '#/definitions/Person'
+        ref: '#/definitions/Person'
 
   SearchPersonsResponsePageable:
     properties:
       results:
         items:
-          $ref: '#/definitions/Person'
+          ref: '#/definitions/Person'
         type: array
       page:
         type: integer

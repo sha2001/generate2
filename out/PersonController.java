@@ -21,34 +21,34 @@ public class PersonController implements PersonApi {
         string lastName
         string bornAfter
         string bornBefore
-        string page
-        string pageSize
+        integer page
+        integer pageSize
     ) {
     }
     @Override
     public createPerson(
-        string person
+         person
         string type
     ) {
     }
     @Override
     public searchPersons(
         string search
-        string page
-        string pageSize
+        integer page
+        integer pageSize
     ) {
     }
     @Override
     public advancedSearchPersons(
-        string searchCriteria
-        string page
-        string pageSize
+         searchCriteria
+        integer page
+        integer pageSize
          
     ) {
     }
     @Override
     public getPersonWithDisabilityBySsin(
-        string ssin
+         ssin
     ) {
     }
     @Override
@@ -60,19 +60,19 @@ public class PersonController implements PersonApi {
     @Override
     public updatePerson(
          
-        string person
+         person
     ) {
     }
     @Override
     public updateContactInfo(
          
-        string contactInfo
+         contactInfo
     ) {
     }
     @Override
     public createPersonBelgianAddress(
          
-        string address
+         address
     ) {
     }
     @Override
@@ -85,13 +85,13 @@ public class PersonController implements PersonApi {
     public updateBelgianAddress(
          
          
-        string address
+         address
     ) {
     }
     @Override
     public createForeignAddress(
          
-        string address
+         address
     ) {
     }
     @Override
@@ -104,13 +104,13 @@ public class PersonController implements PersonApi {
     public updateForeignAddress(
          
          
-        string address
+         address
     ) {
     }
     @Override
     public createRelation(
          
-        string relation
+         relation
     ) {
     }
     @Override
@@ -123,7 +123,7 @@ public class PersonController implements PersonApi {
     public updateRelation(
          
          
-        string relation
+         relation
     ) {
     }
     @Override
@@ -131,13 +131,13 @@ public class PersonController implements PersonApi {
          
         string context
         string code
-        string active
+        boolean active
     ) {
     }
     @Override
     public createInscription(
          
-        string inscription
+         inscription
     ) {
     }
     @Override

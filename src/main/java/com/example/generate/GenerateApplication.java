@@ -45,11 +45,11 @@ public class GenerateApplication implements CommandLineRunner {
         Swagger swaggerObjects = swaggerLoader.load(swaggerObjectsFiles);
 
         Configuration configuration = snakeLoader.load(configurationFile);
-       // swaggerMapper.mapObjects(swaggerObjects, configuration);
+        swaggerMapper.mapObjects(swaggerObjects, configuration);
 
-       // configuration.getController().setOperations(swaggerMapper.mapOperations(swaggerOperations, configuration));
+        configuration.getController().setOperations(swaggerMapper.mapOperations(swaggerOperations, configuration));
 
-        log.info("{}", configuration);
+ //       log.info("{}", swaggerOperations);
 
         sourceGenerator.generate(configuration);
 

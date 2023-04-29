@@ -2,11 +2,8 @@ package com.example.generate.openapi.model;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class Schema {
-    String ref;
+public class Id {
+    String description;
     String type;
-    Items items;
 }

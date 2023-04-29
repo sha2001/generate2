@@ -14,6 +14,6 @@ public class Swagger {
     Information info;
     List<Tag> tags;
     Map<String, Path> paths;
-    List<Definition> definitions;
-
+    Map<String, Definition> definitions;
+    Map<String, Parameter> parameters;
 }

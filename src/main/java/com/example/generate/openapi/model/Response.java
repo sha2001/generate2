@@ -6,4 +6,5 @@ import lombok.Data;
 public class Response {
     String description;
     Schema schema;
+    Headers headers;
 }
