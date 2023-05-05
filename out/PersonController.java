@@ -11,44 +11,41 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 
 public class PersonController implements PersonApi {
-
-
-
     @Override
     public getAllPersons(
          
-        string firstName
-        string lastName
-        string bornAfter
-        string bornBefore
-        integer page
-        integer pageSize
+        string firstName,
+        string lastName,
+        string bornAfter,
+        string bornBefore,
+        integer page,
+        integer pageSize,
     ) {
     }
     @Override
     public createPerson(
-         person
-        string type
+         person,
+        string type,
     ) {
     }
     @Override
     public searchPersons(
-        string search
-        integer page
-        integer pageSize
+        string search,
+        integer page,
+        integer pageSize,
     ) {
     }
     @Override
     public advancedSearchPersons(
-         searchCriteria
-        integer page
-        integer pageSize
+         searchCriteria,
+        integer page,
+        integer pageSize,
          
     ) {
     }
     @Override
     public getPersonWithDisabilityBySsin(
-         ssin
+         ssin,
     ) {
     }
     @Override
@@ -60,19 +57,19 @@ public class PersonController implements PersonApi {
     @Override
     public updatePerson(
          
-         person
+         person,
     ) {
     }
     @Override
     public updateContactInfo(
          
-         contactInfo
+         contactInfo,
     ) {
     }
     @Override
     public createPersonBelgianAddress(
          
-         address
+         address,
     ) {
     }
     @Override
@@ -85,13 +82,13 @@ public class PersonController implements PersonApi {
     public updateBelgianAddress(
          
          
-         address
+         address,
     ) {
     }
     @Override
     public createForeignAddress(
          
-         address
+         address,
     ) {
     }
     @Override
@@ -104,13 +101,13 @@ public class PersonController implements PersonApi {
     public updateForeignAddress(
          
          
-         address
+         address,
     ) {
     }
     @Override
     public createRelation(
          
-         relation
+         relation,
     ) {
     }
     @Override
@@ -123,21 +120,21 @@ public class PersonController implements PersonApi {
     public updateRelation(
          
          
-         relation
+         relation,
     ) {
     }
     @Override
     public getInscriptions(
          
-        string context
-        string code
-        boolean active
+        string context,
+        string code,
+        boolean active,
     ) {
     }
     @Override
     public createInscription(
          
-         inscription
+         inscription,
     ) {
     }
     @Override

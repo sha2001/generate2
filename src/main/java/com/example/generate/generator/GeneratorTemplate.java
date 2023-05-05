@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum GeneratorTemplate {
+  SERVICE("service.ftlh","Service.java"),
   MAPPER("mapper.ftlh", "Mappper.java"),
   ENTITY("entity.ftlh", ".java"),
   CONTROLLER("controller.ftlh", "Controller.java"),

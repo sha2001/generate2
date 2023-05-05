@@ -15,7 +15,7 @@ public class ${configuration.name}Controller implements ${configuration.name}Api
     @Override
     public ${operation.operationId}(
     <#list operation.parameters as parameter>
-        <#if parameter.type??>${parameter.type}</#if> <#if parameter.name??>${parameter.name}</#if>
+        <#if parameter.type??>${parameter.type}</#if> <#if parameter.name??>${parameter.name},</#if>
     </#list>
     ) {
     }
